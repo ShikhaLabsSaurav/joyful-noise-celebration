@@ -1,26 +1,18 @@
-
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { CelebrationProvider } from "@/contexts/celebration-context";
 import Index from "./pages/Index";
 
-const queryClient = new QueryClient();
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+  <TooltipProvider>
+    <CelebrationProvider>
       <Toaster />
-      <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="*" element={<Index />} />
-        </Routes>
+        <Index />
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+    </CelebrationProvider>
+  </TooltipProvider>
 );
 
 export default App;

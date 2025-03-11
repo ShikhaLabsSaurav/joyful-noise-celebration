@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff } from 'lucide-react';
@@ -27,17 +26,17 @@ const AudioPermission: React.FC<AudioPermissionProps> = ({ onPermissionGranted }
   };
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center">
-      <div className="rounded-full bg-primary/10 p-6 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 sm:p-6 text-center">
+      <div className="rounded-full bg-primary/10 p-4 sm:p-6 mb-4 sm:mb-6">
         {isRequesting ? (
-          <Mic className="h-16 w-16 text-primary animate-pulse" />
+          <Mic className="h-12 w-12 sm:h-16 sm:w-16 text-primary animate-pulse" />
         ) : (
-          <MicOff className="h-16 w-16 text-muted-foreground" />
+          <MicOff className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground" />
         )}
       </div>
       
-      <h2 className="text-2xl font-bold mb-2">Microphone Access Required</h2>
-      <p className="text-muted-foreground mb-6 max-w-md">
+      <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Microphone Access Required</h2>
+      <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-xs sm:max-w-md mx-auto">
         This app needs microphone access to measure noise levels in real-time.
         Your audio is processed locally and is not sent to any server.
       </p>
@@ -46,6 +45,7 @@ const AudioPermission: React.FC<AudioPermissionProps> = ({ onPermissionGranted }
         size="lg" 
         onClick={requestMicrophoneAccess}
         disabled={isRequesting}
+        className="w-full sm:w-auto"
       >
         <Mic className="mr-2 h-4 w-4" />
         {isRequesting ? 'Requesting Access...' : 'Allow Microphone Access'}

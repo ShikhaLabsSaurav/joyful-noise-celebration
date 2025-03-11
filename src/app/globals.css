@@ -1,0 +1,318 @@
+.hide-speedometer {
+  display: none !important;
+}
+
+.hide-speedometer > * {
+  display: none !important;
+}
+
+/* Ensure celebration elements are visible */
+.hide-speedometer .fixed {
+  display: flex !important;
+}
+
+.hide-speedometer .noise-card {
+  display: none;
+}
+
+/* Modern Diya Animations */
+@keyframes modern-flame {
+  0% {
+    transform: translateX(-50%) scaleY(1) rotate(-1deg);
+    filter: brightness(1) blur(1px);
+  }
+  25% {
+    transform: translateX(-52%) scaleY(1.05) rotate(1deg);
+    filter: brightness(1.1) blur(1.5px);
+  }
+  50% {
+    transform: translateX(-50%) scaleY(1.1) rotate(-0.5deg);
+    filter: brightness(1.2) blur(2px);
+  }
+  75% {
+    transform: translateX(-48%) scaleY(1.05) rotate(1.5deg);
+    filter: brightness(1.15) blur(1.5px);
+  }
+  100% {
+    transform: translateX(-50%) scaleY(1) rotate(-1deg);
+    filter: brightness(1) blur(1px);
+  }
+}
+
+@keyframes modern-flame-slow {
+  0%, 100% {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 0.7;
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateX(-50%) scaleY(1.15);
+    opacity: 0.9;
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes modern-shimmer {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scaleX(0.95);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+@keyframes modern-glow {
+  0%, 100% {
+    opacity: var(--opacity-value, 0.4);
+    transform: scale(1);
+    filter: blur(16px);
+  }
+  50% {
+    opacity: calc(var(--opacity-value, 0.4) * 1.5);
+    transform: scale(1.1);
+    filter: blur(20px);
+  }
+}
+
+@keyframes modern-ambient {
+  0%, 100% {
+    opacity: var(--opacity-value, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    opacity: calc(var(--opacity-value, 0.2) * 1.3);
+    transform: scale(1.05);
+  }
+}
+
+.animate-modern-flame {
+  animation: modern-flame 2s ease-in-out infinite;
+}
+
+.animate-modern-flame-slow {
+  animation: modern-flame-slow 3s ease-in-out infinite;
+}
+
+.animate-modern-shimmer {
+  animation: modern-shimmer 4s ease-in-out infinite;
+}
+
+.animate-modern-glow {
+  animation: modern-glow 3s ease-in-out infinite;
+}
+
+.animate-modern-ambient {
+  animation: modern-ambient 4s ease-in-out infinite;
+}
+
+/* Celebration animation */
+@keyframes celebration-diya {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: brightness(1) blur(16px);
+  }
+  50% {
+    transform: scale(1.5) translateY(-20px);
+    filter: brightness(1.3) blur(20px);
+  }
+}
+
+.animate-celebration-diya {
+  animation: celebration-diya 2s ease-in-out infinite;
+}
+
+/* Pulse animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: var(--opacity-value, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    opacity: calc(var(--opacity-value, 0.3) * 1.5);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-fast {
+  0%, 100% {
+    opacity: var(--opacity-value, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    opacity: calc(var(--opacity-value, 0.3) * 1.3);
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse-fast 2s ease-in-out infinite;
+}
+
+/* Enhanced Diya Flame Animations */
+@keyframes flame-flicker {
+  0% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 0.85;
+  }
+  15% {
+    transform: scale(1.15) rotate(1deg);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.9) rotate(-3deg);
+    opacity: 0.75;
+  }
+  45% {
+    transform: scale(1.1) rotate(2deg);
+    opacity: 0.95;
+  }
+  60% {
+    transform: scale(0.95) rotate(-1deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: scale(1.05) rotate(1deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes flame-dance {
+  0% {
+    transform: translateX(-50%) rotate(-3deg) scaleY(1);
+    border-radius: 70% 30% 90% 30%;
+  }
+  25% {
+    transform: translateX(-48%) rotate(2deg) scaleY(1.15);
+    border-radius: 30% 90% 30% 70%;
+  }
+  50% {
+    transform: translateX(-52%) rotate(-2deg) scaleY(0.9);
+    border-radius: 90% 30% 70% 90%;
+  }
+  75% {
+    transform: translateX(-49%) rotate(3deg) scaleY(1.1);
+    border-radius: 30% 70% 30% 70%;
+  }
+  100% {
+    transform: translateX(-50%) rotate(-3deg) scaleY(1);
+    border-radius: 70% 30% 90% 30%;
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(1) translateX(-50%);
+    filter: blur(16px);
+  }
+  25% {
+    opacity: 0.9;
+    transform: scale(1.15) translateX(-45%);
+    filter: blur(18px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95) translateX(-55%);
+    filter: blur(14px);
+  }
+  75% {
+    opacity: 0.8;
+    transform: scale(1.1) translateX(-48%);
+    filter: blur(17px);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1) translateX(-50%);
+    filter: blur(16px);
+  }
+}
+
+@keyframes spark-float {
+  0% {
+    transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(-30px) translateX(var(--spark-drift)) scale(0.8) rotate(45deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-60px) translateX(calc(var(--spark-drift) * 1.5)) scale(0.6) rotate(90deg);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateY(-90px) translateX(calc(var(--spark-drift) * 2)) scale(0.4) rotate(135deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-120px) translateX(calc(var(--spark-drift) * 2.5)) scale(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes oil-shimmer {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scaleX(1);
+  }
+  20% {
+    opacity: 0.7;
+    transform: translateX(-50%) scaleX(1.1);
+  }
+  40% {
+    opacity: 0.4;
+    transform: translateX(-50%) scaleX(0.95);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateX(-50%) scaleX(1.05);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+.animate-flame-flicker {
+  animation: flame-flicker 4s ease-in-out infinite;
+}
+
+.animate-flame-dance {
+  animation: flame-dance 5s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-spark-float {
+  animation: spark-float 2.5s ease-out infinite;
+}
+
+.animate-oil-shimmer {
+  animation: oil-shimmer 4s ease-in-out infinite;
+}
+
+/* Celebration Animation */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) scale(2.5);
+  }
+  50% {
+    transform: translateY(-20px) scale(2.5);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 3s ease-in-out infinite;
+} 

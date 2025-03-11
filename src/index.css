@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,8 +48,12 @@
     @apply border-border;
   }
 
+  html {
+    @apply antialiased;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen overflow-x-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -65,7 +68,7 @@
   }
   
   .section-title {
-    @apply text-sm font-medium text-muted-foreground tracking-wider uppercase mb-4;
+    @apply text-xs sm:text-sm font-medium text-muted-foreground tracking-wider uppercase mb-3 sm:mb-4;
   }
   
   .page-transition-enter {
@@ -73,6 +76,14 @@
   }
   
   .noise-card {
-    @apply glassmorphism p-6 rounded-lg hover-scale;
+    @apply glassmorphism p-4 sm:p-5 md:p-6 rounded-lg hover-scale;
+  }
+
+  .container-responsive {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-responsive {
+    @apply text-sm sm:text-base md:text-lg;
   }
 }

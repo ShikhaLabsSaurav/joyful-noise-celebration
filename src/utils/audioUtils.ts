@@ -1,4 +1,3 @@
-
 // Utility functions for audio processing and noise level calculation
 
 // Function to get microphone permission and set up the audio analyzer
@@ -43,19 +42,19 @@ export const getDecibelLevel = (analyzer: AnalyserNode): number => {
   const average = dataArray.reduce((sum, value) => sum + value, 0) / dataArray.length;
   
   // Convert to decibel scale (rough approximation)
-  // Mapping 0-255 to 30-100 dB range for better visualization
+  // Mapping 0-255 to 30-200 dB range for better visualization
   const minDb = 30;
-  const maxDb = 100;
+  const maxDb = 200;
   const dbLevel = minDb + (average / 255) * (maxDb - minDb);
   
   return Math.round(dbLevel * 10) / 10; // Round to one decimal place
 };
 
-// Define noise level thresholds
+// Define noise level thresholds (updated for 30-200 dB scale)
 export const NOISE_THRESHOLD = {
-  LOW: 50,
-  MEDIUM: 70,
-  HIGH: 85
+  LOW: 80,
+  MEDIUM: 130,
+  HIGH: 160
 };
 
 // Check if current noise level is within acceptable limits

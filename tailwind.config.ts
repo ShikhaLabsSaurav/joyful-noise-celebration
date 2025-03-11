@@ -1,5 +1,5 @@
-
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -141,6 +141,45 @@ export default {
 					'0%': { transform: 'translateY(0px)' },
 					'50%': { transform: 'translateY(-10px)' },
 					'100%': { transform: 'translateY(0px)' }
+				},
+				'float-slow': {
+					'0%, 100%': { transform: 'translateY(0) rotate(0)' },
+					'50%': { transform: 'translateY(-20px) rotate(5deg)' }
+				},
+				'float-slower': {
+					'0%, 100%': { transform: 'translateY(0) rotate(0)' },
+					'50%': { transform: 'translateY(-15px) rotate(-5deg)' }
+				},
+				'float-slowest': {
+					'0%, 100%': { transform: 'translateY(0) rotate(0)' },
+					'50%': { transform: 'translateY(-10px) rotate(3deg)' }
+				},
+				'bright-glow': {
+					'0%': { 
+						opacity: '0',
+						backgroundColor: 'rgba(255, 255, 255, 0)'
+					},
+					'100%': { 
+						opacity: '1',
+						backgroundColor: 'rgba(255, 255, 255, 0.95)'
+					}
+				},
+				'celebration-flash': {
+					'0%': { 
+						backgroundColor: 'rgba(239, 68, 68, 0.95)' // red
+					},
+					'25%': {
+						backgroundColor: 'rgba(59, 130, 246, 0.95)' // blue
+					},
+					'50%': {
+						backgroundColor: 'rgba(16, 185, 129, 0.95)' // green
+					},
+					'75%': {
+						backgroundColor: 'rgba(245, 158, 11, 0.95)' // amber
+					},
+					'100%': {
+						backgroundColor: 'rgba(239, 68, 68, 0.95)' // red
+					}
 				}
 			},
 			animation: {
@@ -154,9 +193,14 @@ export default {
 				'slide-out': 'slide-out 0.3s ease-out',
 				'pulse-slow': 'pulse-slow 2s ease-in-out infinite',
 				'celebrate': 'celebrate 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'float-slow': 'float-slow 3s ease-in-out infinite',
+				'float-slower': 'float-slower 4s ease-in-out infinite',
+				'float-slowest': 'float-slowest 5s ease-in-out infinite',
+				'bright-glow': 'bright-glow 1s ease-in forwards',
+				'celebration-flash': 'celebration-flash 2s linear infinite'
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [animate],
 } satisfies Config;

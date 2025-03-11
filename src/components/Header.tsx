@@ -1,69 +1,27 @@
-
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Bell, BarChart2, List } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { BarChart2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useCelebration } from '@/contexts/celebration-context';
 
 const Header: React.FC = () => {
-  const location = useLocation();
-  const { toast } = useToast();
-
-  const showNotification = () => {
-    toast({
-      title: 'Noise Monitor',
-      description: 'All noise levels are being monitored in real-time.',
-    });
-  };
+  const { isCelebrating } = useCelebration();
 
   return (
-    <header className="w-full glassmorphism sticky top-0 z-50 py-3 px-4 md:px-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center mr-3">
-            <BarChart2 className="text-white h-5 w-5" />
-          </div>
-          <h1 className="text-xl font-medium">NoiseMonitor</h1>
+    <header className="w-full glassmorphism sticky top-0 z-50 py-2 sm:py-3 px-3 sm:px-4 md:px-6">
+      <div className="flex items-center">
+        <div className={cn(
+          "h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-primary flex items-center justify-center mr-2 sm:mr-3 transition-all duration-500",
+          isCelebrating && "animate-celebrate shadow-[0_0_15px_5px_rgba(79,70,229,0.3)]"
+        )}>
+          <BarChart2 className={cn(
+            "text-white h-4 w-4 sm:h-5 sm:w-5 transition-transform duration-500",
+            isCelebrating && "animate-float"
+          )} />
         </div>
-        
-        <nav className="hidden md:flex items-center space-x-1">
-          <Link 
-            to="/" 
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              location.pathname === '/' 
-                ? 'bg-primary/10 text-primary' 
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-          >
-            Dashboard
-          </Link>
-          <Link 
-            to="/history" 
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              location.pathname === '/history' 
-                ? 'bg-primary/10 text-primary' 
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-          >
-            History
-          </Link>
-        </nav>
-        
-        <div className="flex items-center space-x-2">
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={showNotification}
-            className="relative"
-          >
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-primary rounded-full" />
-          </Button>
-          
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <List className="h-5 w-5" />
-          </Button>
-        </div>
+        <h1 className={cn(
+          "text-lg sm:text-xl font-medium transition-all duration-500",
+          isCelebrating && "text-primary animate-pulse-slow scale-105"
+        )}>NoiseMonitor</h1>
       </div>
     </header>
   );
