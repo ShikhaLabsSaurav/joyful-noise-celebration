@@ -1,5 +1,6 @@
+
 import React, { useEffect, useState, useRef } from 'react';
-import { Volume2, Volume, VolumeX, Gauge } from 'lucide-react';
+import { Volume2, Volume, VolumeX } from 'lucide-react';
 import Celebration from './Celebration';
 import { 
   setupAudioAnalyzer, 
@@ -88,12 +89,6 @@ const NoiseLevel: React.FC = () => {
   
   const category = getNoiseLevelCategory(noiseLevel);
   
-  const getNoiseLevelColor = () => {
-    if (category === 'low') return 'text-green-500';
-    if (category === 'medium') return 'text-yellow-500';
-    return 'text-red-500';
-  };
-  
   const getVolumeIcon = () => {
     if (category === 'low') return <VolumeX className="h-6 w-6 text-green-500" />;
     if (category === 'medium') return <Volume className="h-6 w-6 text-yellow-500" />;
@@ -113,19 +108,8 @@ const NoiseLevel: React.FC = () => {
             value={noiseLevel} 
             minValue={30} 
             maxValue={100} 
-            thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM, NOISE_THRESHOLD.HIGH]}
+            thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM]} 
           />
-          
-          <div className="flex items-end gap-2 mt-2">
-            <div 
-              className={`text-4xl font-bold ${getNoiseLevelColor()} transition-all ${
-                isAnimating ? 'scale-110' : 'scale-100'
-              }`}
-            >
-              {noiseLevel}
-            </div>
-            <div className="text-lg text-muted-foreground mb-1">dB</div>
-          </div>
         </div>
         
         <div className="mt-2 flex items-center gap-2">
@@ -134,7 +118,7 @@ const NoiseLevel: React.FC = () => {
             <div className={`text-xl font-medium ${
               isWithinNoiseLimit(maxLevel) ? 'text-green-500' : 'text-red-500'
             }`}>
-              {maxLevel} dB
+              {maxLevel.toFixed(1)} dB
             </div>
           </div>
           
