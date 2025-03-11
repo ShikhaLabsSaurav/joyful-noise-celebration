@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Database, Filter, RefreshCw, Search } from 'lucide-react';
+import { Database as DatabaseIcon, Filter, RefreshCw, Search } from 'lucide-react';
 import { 
   Table, 
   TableBody, 
@@ -51,7 +51,7 @@ const Database: React.FC = () => {
     <div className="noise-card">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Database className="h-5 w-5 text-primary" />
+          <DatabaseIcon className="h-5 w-5 text-primary" />
           <span className="section-title">Noise Database</span>
         </div>
         <Button 
