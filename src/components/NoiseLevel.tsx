@@ -1,7 +1,5 @@
-
 import React, { useEffect, useState, useRef } from 'react';
-import { Volume2, Volume, VolumeX } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import { Volume2, Volume, VolumeX, Gauge } from 'lucide-react';
 import Celebration from './Celebration';
 import { 
   setupAudioAnalyzer, 
@@ -10,6 +8,7 @@ import {
   getNoiseLevelCategory,
   NOISE_THRESHOLD
 } from '@/utils/audioUtils';
+import NoiseGauge from './NoiseGauge';
 
 const NoiseLevel: React.FC = () => {
   const [noiseLevel, setNoiseLevel] = useState<number>(45);
@@ -21,7 +20,6 @@ const NoiseLevel: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   
-  // Set up audio analyzer once the component mounts
   useEffect(() => {
     let isActive = true;
     
@@ -33,14 +31,12 @@ const NoiseLevel: React.FC = () => {
         audioContextRef.current = audioContext;
         streamRef.current = stream;
         
-        // Start measuring noise levels
         startMeasuring();
       }
     };
     
     initializeAudio();
     
-    // Clean up on unmount
     return () => {
       isActive = false;
       if (animationRef.current) {
@@ -57,19 +53,16 @@ const NoiseLevel: React.FC = () => {
     };
   }, []);
   
-  // Start measuring noise levels in real-time
   const startMeasuring = () => {
     const measure = () => {
       if (analyzerRef.current) {
         const level = getDecibelLevel(analyzerRef.current);
         
         setNoiseLevel(prevLevel => {
-          // Update max level if current level is higher
           if (level > maxLevel) {
             setMaxLevel(level);
           }
           
-          // If transitioning from high to acceptable noise level, trigger celebration
           const prevIsWithinLimit = isWithinNoiseLimit(prevLevel);
           const currentIsWithinLimit = isWithinNoiseLimit(level);
           
@@ -78,7 +71,6 @@ const NoiseLevel: React.FC = () => {
             setTimeout(() => setShowCelebration(false), 3000);
           }
           
-          // Animate when noise level changes significantly
           if (Math.abs(level - prevLevel) > 3) {
             setIsAnimating(true);
             setTimeout(() => setIsAnimating(false), 300);
@@ -94,28 +86,14 @@ const NoiseLevel: React.FC = () => {
     measure();
   };
   
-  // Get noise level category for styling
   const category = getNoiseLevelCategory(noiseLevel);
   
-  // Get color based on noise level
   const getNoiseLevelColor = () => {
     if (category === 'low') return 'text-green-500';
     if (category === 'medium') return 'text-yellow-500';
     return 'text-red-500';
   };
   
-  // Get progress color and value
-  const getProgressProps = () => {
-    const value = Math.min(100, (noiseLevel / 100) * 100);
-    
-    if (category === 'low') return { color: 'bg-green-500', value };
-    if (category === 'medium') return { color: 'bg-yellow-500', value };
-    return { color: 'bg-red-500', value };
-  };
-  
-  const progressProps = getProgressProps();
-  
-  // Get appropriate volume icon
   const getVolumeIcon = () => {
     if (category === 'low') return <VolumeX className="h-6 w-6 text-green-500" />;
     if (category === 'medium') return <Volume className="h-6 w-6 text-yellow-500" />;
@@ -130,32 +108,27 @@ const NoiseLevel: React.FC = () => {
           {getVolumeIcon()}
         </div>
         
-        <div className="flex items-end gap-2 mb-4">
-          <div 
-            className={`text-4xl font-bold ${getNoiseLevelColor()} transition-all ${
-              isAnimating ? 'scale-110' : 'scale-100'
-            }`}
-          >
-            {noiseLevel}
-          </div>
-          <div className="text-lg text-muted-foreground mb-1">dB</div>
-        </div>
-        
-        <div className="space-y-2">
-          <Progress 
-            value={progressProps.value} 
-            className="h-2"
-            indicatorClassName={progressProps.color}
+        <div className="flex flex-col items-center mb-4">
+          <NoiseGauge 
+            value={noiseLevel} 
+            minValue={30} 
+            maxValue={100} 
+            thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM, NOISE_THRESHOLD.HIGH]}
           />
           
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>{NOISE_THRESHOLD.LOW} dB</span>
-            <span>{NOISE_THRESHOLD.MEDIUM} dB</span>
-            <span>{NOISE_THRESHOLD.HIGH} dB</span>
+          <div className="flex items-end gap-2 mt-2">
+            <div 
+              className={`text-4xl font-bold ${getNoiseLevelColor()} transition-all ${
+                isAnimating ? 'scale-110' : 'scale-100'
+              }`}
+            >
+              {noiseLevel}
+            </div>
+            <div className="text-lg text-muted-foreground mb-1">dB</div>
           </div>
         </div>
         
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-2 flex items-center gap-2">
           <div className="flex-1">
             <div className="text-xs text-muted-foreground mb-1">Today's Max</div>
             <div className={`text-xl font-medium ${
