@@ -87,7 +87,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
             "bg-gradient-to-t from-yellow-300/90 via-orange-400/80 to-transparent",
             "opacity-90",
             "animate-flame-flicker",
-            "delay-[100ms]"
+            "delay-&lsqb;100ms&rsqb;"
           )}>
             {/* Additional Inner Glow */}
             <div className={cn(
@@ -96,7 +96,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
               "bg-gradient-radial from-white/40 via-transparent to-transparent",
               "mix-blend-screen",
               "animate-flame-flicker",
-              "delay-[200ms]"
+              "delay-&lsqb;200ms&rsqb;"
             )} />
           </div>
         </div>
@@ -108,7 +108,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
           "bg-gradient-to-t from-white via-yellow-200/90 to-transparent",
           "mix-blend-screen",
           "animate-flame-flicker",
-          "delay-[150ms]",
+          "delay-&lsqb;150ms&rsqb;",
           category === 'low' ? 'h-16 w-3' : 
           category === 'medium' ? 'h-20 w-4' : 
           'h-24 w-5'
@@ -121,7 +121,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
           "bg-gradient-radial from-orange-500/80 via-orange-400/50 to-transparent",
           "w-24 h-16",
           "animate-glow-pulse",
-          "delay-[50ms]"
+          "delay-&lsqb;50ms&rsqb;"
         )} />
 
         {/* Enhanced Sparks Effect */}
@@ -155,7 +155,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
           "rounded-full blur-[1px]",
           "mix-blend-overlay",
           "animate-flame-dance",
-          "delay-[75ms]"
+          "delay-&lsqb;75ms&rsqb;"
         )} />
 
         {/* Additional Ambient Glow */}
@@ -167,7 +167,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel, isCelebrating }) => {
           "blur-[24px]",
           "mix-blend-screen",
           "animate-glow-pulse",
-          "delay-[250ms]"
+          "delay-&lsqb;250ms&rsqb;"
         )} />
       </div>
 
