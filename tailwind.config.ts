@@ -180,6 +180,73 @@ export default {
 					'100%': {
 						backgroundColor: 'rgba(239, 68, 68, 0.95)' // red
 					}
+				},
+				'flame-flicker': {
+					'0%, 100%': { 
+						transform: 'scale(1) rotate(0deg)',
+						opacity: '1'
+					},
+					'25%': { 
+						transform: 'scale(0.95) rotate(-1deg)',
+						opacity: '0.8'
+					},
+					'75%': { 
+						transform: 'scale(1.05) rotate(1deg)',
+						opacity: '0.9'
+					}
+				},
+				'flame-dance': {
+					'0%, 100%': { 
+						transform: 'scale(1) rotate(0deg) translateX(0)'
+					},
+					'25%': { 
+						transform: 'scale(1.1) rotate(-2deg) translateX(-1px)'
+					},
+					'75%': { 
+						transform: 'scale(0.95) rotate(2deg) translateX(1px)'
+					}
+				},
+				'flame-sway': {
+					'0%, 100%': { 
+						transform: 'rotate(-2deg)'
+					},
+					'50%': { 
+						transform: 'rotate(2deg)'
+					}
+				},
+				'smoke-rise': {
+					'0%': { 
+						transform: 'translateY(0) scale(1)',
+						opacity: '0.4'
+					},
+					'100%': { 
+						transform: 'translateY(-20px) scale(1.5)',
+						opacity: '0'
+					}
+				},
+				'glow-pulse': {
+					'0%, 100%': { 
+						opacity: '0.6',
+						transform: 'scale(1)'
+					},
+					'50%': { 
+						opacity: '0.8',
+						transform: 'scale(1.1)'
+					}
+				},
+				'flame-appear': {
+					'0%': { 
+						transform: 'scale(0.3) translateY(50%)',
+						opacity: '0'
+					},
+					'50%': {
+						transform: 'scale(0.7) translateY(25%)',
+						opacity: '0.5'
+					},
+					'100%': { 
+						transform: 'scale(1) translateY(0)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
@@ -198,7 +265,13 @@ export default {
 				'float-slower': 'float-slower 4s ease-in-out infinite',
 				'float-slowest': 'float-slowest 5s ease-in-out infinite',
 				'bright-glow': 'bright-glow 1s ease-in forwards',
-				'celebration-flash': 'celebration-flash 2s linear infinite'
+				'celebration-flash': 'celebration-flash 2s linear infinite',
+				'flame-flicker': 'flame-flicker 3s ease-in-out infinite',
+				'flame-dance': 'flame-dance 4s ease-in-out infinite',
+				'flame-sway': 'flame-sway 6s ease-in-out infinite',
+				'smoke-rise': 'smoke-rise 2s ease-out infinite',
+				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+				'flame-appear': 'flame-appear 0.5s ease-out forwards'
 			}
 		}
 	},

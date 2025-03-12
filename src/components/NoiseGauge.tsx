@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { GaugeComponent } from "react-gauge-component";
-import { useCelebration } from "@/contexts/celebration-context";
 import Diya from "./Diya";
 
 interface NoiseGaugeProps {
@@ -18,8 +17,6 @@ const NoiseGauge: React.FC<NoiseGaugeProps> = ({
   thresholds,
   className = "",
 }) => {
-  // Context
-  const { isCelebrating } = useCelebration();
 
   // Validate props
   const validateThresholds = () => {
@@ -74,7 +71,7 @@ const NoiseGauge: React.FC<NoiseGaugeProps> = ({
     >
       {/* Centered Diya with conditional rendering */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 sm:scale-125 md:scale-150">
-        {Diya && <Diya noiseLevel={normalizedValue} isCelebrating={isCelebrating} />}
+        {Diya && <Diya noiseLevel={normalizedValue} />}
       </div>
 
       {/* Gauge and Value Display */}

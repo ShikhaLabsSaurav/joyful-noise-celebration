@@ -7,7 +7,6 @@ import {
   NOISE_THRESHOLD
 } from '@/utils/audioUtils';
 import NoiseGauge from './NoiseGauge';
-import { useCelebration } from '@/contexts/celebration-context';
 
 const NoiseLevel: React.FC = () => {
   const [noiseLevel, setNoiseLevel] = useState<number>(45);
@@ -16,7 +15,6 @@ const NoiseLevel: React.FC = () => {
   const animationRef = useRef<number | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const { startCelebration } = useCelebration();
   
   useEffect(() => {
     let isActive = true;
@@ -62,7 +60,7 @@ const NoiseLevel: React.FC = () => {
           
           // Trigger celebration when limit is reached
           if (!currentIsWithinLimit && prevIsWithinLimit) {
-            startCelebration(true);
+           // startCelebration(true);
           }
           
           if (Math.abs(level - prevLevel) > 3) {
@@ -85,7 +83,7 @@ const NoiseLevel: React.FC = () => {
       <NoiseGauge 
         value={noiseLevel} 
         minValue={30} 
-        maxValue={200} 
+        maxValue={150} 
         thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM]}
         className="w-full max-w-screen-lg mx-auto" 
       />
