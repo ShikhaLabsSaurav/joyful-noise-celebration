@@ -45,10 +45,10 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
     <div className="relative w-full h-full flex items-center justify-center pt-16">
       {/* Ambient Glow - Only visible when flame is visible */}
       <div className={cn(
-        "absolute -inset-12 sm:-inset-16",
+        "absolute -inset-16 sm:-inset-24 md:-inset-32",
         "rounded-full blur-3xl",
         "bg-gradient-radial from-orange-500/40 via-amber-500/20 to-transparent",
-        "transition-opacity duration-700", // Slower transition for smooth appearance
+        "transition-opacity duration-700",
         isFlameVisible ? "opacity-80" : "opacity-0"
       )} />
 
@@ -65,12 +65,12 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
         <div 
           className={cn(
             "absolute left-1/2 -translate-x-1/2 bottom-[80%]",
-            "transition-all duration-700 ease-in-out", // Slower transition for realistic appearance
+            "transition-all duration-700 ease-in-out",
             isFlameVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
           )}
           style={{
-            height: `${Math.max(20, flameSize * 0.8)}px`,
-            width: `${Math.max(12, flameSize * 0.4)}px`,
+            height: `${Math.max(60, flameSize * 2)}px`,
+            width: `${Math.max(36, flameSize * 1)}px`,
             transitionProperty: "opacity, transform, height, width"
           }}
         >
