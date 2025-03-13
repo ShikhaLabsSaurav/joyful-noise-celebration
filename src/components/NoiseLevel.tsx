@@ -82,8 +82,8 @@ const NoiseLevel: React.FC = () => {
     <div className="w-full h-full flex flex-col items-center justify-center">
       <NoiseGauge 
         value={noiseLevel} 
-        minValue={30} 
-        maxValue={150} 
+        minValue={0} 
+        maxValue={50} 
         thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM]}
         className="w-full max-w-screen-lg mx-auto" 
       />

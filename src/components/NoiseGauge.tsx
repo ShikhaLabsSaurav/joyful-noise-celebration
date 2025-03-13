@@ -70,7 +70,7 @@ const NoiseGauge: React.FC<NoiseGaugeProps> = ({
       className={`relative w-full min-h-[calc(100vh-4rem)] flex items-center justify-center ${className}`}
     >
       {/* Centered Diya with conditional rendering */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 sm:scale-125 md:scale-150">
+      <div className="absolute bottom-72 left-1/2 -translate-x-1/2 scale-100 sm:scale-125 md:scale-150">
         {Diya && <Diya noiseLevel={normalizedValue} />}
       </div>
 

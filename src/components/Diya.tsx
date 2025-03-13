@@ -8,38 +8,52 @@ interface DiyaProps {
 }
 
 const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
-  const category = getNoiseLevelCategory(noiseLevel);
   const [isFlameVisible, setIsFlameVisible] = useState(false);
+  const [hasHitHighThreshold, setHasHitHighThreshold] = useState(false);
   
-  // Calculate flame size based on noise level and existing NOISE_THRESHOLD
+  // Effect to check if HIGH threshold is hit for the first time
+  useEffect(() => {
+    if (noiseLevel >= NOISE_THRESHOLD.HIGH && !hasHitHighThreshold) {
+      setHasHitHighThreshold(true);
+      setIsFlameVisible(true);
+    }
+  }, [noiseLevel, hasHitHighThreshold]);
+
+  // Calculate flame size based on noise level and threshold status
   const flameSize = useMemo(() => {
+    // Once high threshold is hit, always return maximum size
+    if (hasHitHighThreshold) {
+      return 100;
+    }
+    
     // No flame below LOW threshold
     if (noiseLevel < NOISE_THRESHOLD.LOW) return 0;
     
-    // Cap at HIGH threshold (130dB)
-    if (noiseLevel >= NOISE_THRESHOLD.HIGH) return 100;
-    
     // Gradual size increase between LOW and HIGH thresholds
-    // Map noise from 80-130dB to flame size 10-100
     const ratio = (noiseLevel - NOISE_THRESHOLD.LOW) / (NOISE_THRESHOLD.HIGH - NOISE_THRESHOLD.LOW);
     
     // Using a slightly non-linear growth function for more realistic appearance
-    // Power function makes initial growth slower, then accelerates
     const growthFactor = Math.pow(ratio, 1.2);
     return Math.min(100, Math.max(10, growthFactor * 90 + 10));
-  }, [noiseLevel]);
+  }, [noiseLevel, hasHitHighThreshold]);
 
-  // Determine flame flicker intensity based on noise category
+  // Determine flame flicker intensity based on threshold status
   const flickerIntensity = useMemo(() => {
+    // Once high threshold is hit, always return maximum intensity
+    if (hasHitHighThreshold) return 1.0;
+    
+    const category = getNoiseLevelCategory(noiseLevel);
     if (category === 'low') return 0.3;
     if (category === 'medium') return 0.6;
-    return 1.0; // high category
-  }, [category]);
+    return 1.0;
+  }, [noiseLevel, hasHitHighThreshold]);
 
+  // Only monitor flame visibility if threshold hasn't been hit
   useEffect(() => {
-    // Flame appears only when noise is at or above LOW threshold
-    setIsFlameVisible(noiseLevel >= NOISE_THRESHOLD.LOW);
-  }, [noiseLevel]);
+    if (!hasHitHighThreshold) {
+      setIsFlameVisible(noiseLevel >= NOISE_THRESHOLD.LOW);
+    }
+  }, [noiseLevel, hasHitHighThreshold]);
 
   return (
     <div className="relative w-full h-full flex items-center justify-center pt-16">
@@ -74,7 +88,7 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
             transitionProperty: "opacity, transform, height, width"
           }}
         >
-          <RealisticFlame flickerIntensity={flickerIntensity} category={category} />
+          <RealisticFlame flickerIntensity={flickerIntensity} />
         </div>
       </div>
     </div>
@@ -84,55 +98,38 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
 // Realistic Flame Component
 const RealisticFlame: React.FC<{
   flickerIntensity: number; 
-  category: 'low' | 'medium' | 'high'
-}> = ({ flickerIntensity, category }) => {
-  // Apply different animation intensity based on category
-  const flickerAnimation = category === 'high' 
-    ? "animate-flame-wild" 
-    : category === 'medium' 
-      ? "animate-flame-medium" 
-      : "animate-flame-gentle";
+}> = ({ flickerIntensity }) => {
+  const flickerAnimation = "animate-flame-gentle";
   
-  // Color gradients based on noise level category
-  const flameGradient = category === 'high'
-    ? "from-orange-600 via-amber-400 to-yellow-200"
-    : category === 'medium'
-      ? "from-orange-500 via-amber-300 to-yellow-100" 
-      : "from-orange-400 via-amber-200 to-yellow-50";
+  const flameGradient = "from-yellow-300 via-orange-400 to-red-500";
   
   return (
     <div className="relative w-full h-full">
-      {/* Main Flame */}
       <div className={cn(
         "absolute inset-0",
         `bg-gradient-to-t ${flameGradient}`,
         flickerAnimation,
-        "rounded-[100%]",
+        "rounded-full",
         "origin-bottom",
-        // Inner glow
-        "after:absolute after:inset-[15%]",
+        "after:absolute after:inset-[5%]",
         "after:bg-gradient-to-t",
-        "after:from-white after:via-yellow-200 after:to-transparent",
+        "after:from-white after:via-yellow-400 after:to-transparent",
         "after:rounded-[inherit]",
-        "after:opacity-80"
+        "after:opacity-95",
+        "shadow-2xl",
+        "filter blur-md"
       )} />
-
-      {/* Blue Base */}
       <div className={cn(
         "absolute bottom-0",
-        "w-full h-[15%]",
-        "rounded-[100%]",
-        "opacity-50"
+        "w-full h-[20%]",
+        "rounded-full",
+        "opacity-70"
       )} />
-
-      {/* Subtle Glow - intensity varies by category */}
       <div className={cn(
-        "absolute -inset-[20%]",
-        "bg-gradient-radial from-orange-500/60 to-transparent",
-        "rounded-full blur-md",
-        category === 'high' ? "opacity-80" : 
-        category === 'medium' ? "opacity-60" : 
-        "opacity-40"
+        "absolute -inset-[30%]",
+        "bg-gradient-radial from-orange-600/80 to-transparent",
+        "rounded-full blur-xl",
+        "opacity-55"
       )} />
     </div>
   );

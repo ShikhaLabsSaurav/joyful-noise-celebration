@@ -43,8 +43,8 @@ export const getDecibelLevel = (analyzer: AnalyserNode): number => {
   
   // Convert to decibel scale (rough approximation)
   // Mapping 0-255 to 30-150 dB range for better visualization
-  const minDb = 30;
-  const maxDb = 150;
+  const minDb = 0;
+  const maxDb = 50;
   const dbLevel = minDb + (average / 255) * (maxDb - minDb);
   
   return Math.round(dbLevel * 10) / 10; // Round to one decimal place
@@ -52,9 +52,9 @@ export const getDecibelLevel = (analyzer: AnalyserNode): number => {
 
 // Define noise level thresholds (updated for 30-150 dB scale)
 export const NOISE_THRESHOLD = {
-  LOW: 80,
-  MEDIUM: 110, // Adjusted from 130 to fit in new 150 dB max scale
-  HIGH: 130   // Adjusted from 160 to fit in new 150 dB max scale
+  LOW: 10,
+  MEDIUM: 20, // Adjusted from 130 to fit in new 150 dB max scale
+  HIGH: 30   // Adjusted from 160 to fit in new 150 dB max scale
 };
 
 // Check if current noise level is within acceptable limits
