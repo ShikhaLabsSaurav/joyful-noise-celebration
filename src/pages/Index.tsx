@@ -12,14 +12,14 @@ const Index = () => {
   
   if (!micPermissionGranted) {
     return (
-      <MainLayout>
+      <MainLayout showToggle={false}>
         <AudioPermission onPermissionGranted={handlePermissionGranted} />
       </MainLayout>
     );
   }
   
   return (
-    <MainLayout>
+    <MainLayout showToggle={true}>
       <div className="overflow-hidden">
         <NoiseLevel />
       </div>

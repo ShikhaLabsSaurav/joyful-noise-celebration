@@ -4,11 +4,14 @@ import {
   getDecibelLevel, 
   isWithinNoiseLimit,
   getNoiseLevelCategory,
-  NOISE_THRESHOLD
+  NOISE_THRESHOLD,
+  getNoiseThresholds
 } from '@/utils/audioUtils';
 import NoiseGauge from './NoiseGauge';
+import { useModeContext } from '@/contexts/ModeContext';
 
 const NoiseLevel: React.FC = () => {
+  const { isHardMode } = useModeContext();
   const [noiseLevel, setNoiseLevel] = useState<number>(45);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const analyzerRef = useRef<AnalyserNode | null>(null);
@@ -49,14 +52,23 @@ const NoiseLevel: React.FC = () => {
     };
   }, []);
   
+  // Update measuring animation when hard mode changes
+  useEffect(() => {
+    if (analyzerRef.current && animationRef.current) {
+      // Cancel the current frame and restart measuring with new thresholds
+      cancelAnimationFrame(animationRef.current);
+      startMeasuring();
+    }
+  }, [isHardMode]);
+  
   const startMeasuring = () => {
     const measure = () => {
       if (analyzerRef.current) {
         const level = getDecibelLevel(analyzerRef.current);
         
         setNoiseLevel(prevLevel => {
-          const prevIsWithinLimit = isWithinNoiseLimit(prevLevel);
-          const currentIsWithinLimit = isWithinNoiseLimit(level);
+          const prevIsWithinLimit = isWithinNoiseLimit(prevLevel, isHardMode);
+          const currentIsWithinLimit = isWithinNoiseLimit(level, isHardMode);
           
           // Trigger celebration when limit is reached
           if (!currentIsWithinLimit && prevIsWithinLimit) {
@@ -78,13 +90,16 @@ const NoiseLevel: React.FC = () => {
     measure();
   };
 
+  // Get threshold values based on current mode
+  const thresholds = getNoiseThresholds(isHardMode);
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <NoiseGauge 
         value={noiseLevel} 
         minValue={0} 
-        maxValue={140} 
-        thresholds={[NOISE_THRESHOLD.LOW, NOISE_THRESHOLD.MEDIUM]}
+        maxValue={isHardMode ? 180 : 140} 
+        thresholds={[thresholds.LOW, thresholds.MEDIUM]}
         className="w-full max-w-screen-lg mx-auto" 
       />
     </div>

@@ -50,21 +50,40 @@ export const getDecibelLevel = (analyzer: AnalyserNode): number => {
   return Math.round(dbLevel * 10) / 10; // Round to one decimal place
 };
 
-// Define noise level thresholds (updated for 30-150 dB scale)
+// Define noise level thresholds (base values)
 export const NOISE_THRESHOLD = {
-  LOW: 40,     // Quiet office, normal conversation
-  MEDIUM: 70,  // Busy traffic, noisy restaurant
-  HIGH: 90     // Concert, loud crowd - but still below dangerous levels
+  LOW: 40,     // Quiet office, normal conversation (default)
+  MEDIUM: 70,  // Busy traffic, noisy restaurant (default)
+  HIGH: 90     // Default value, will be overridden by getNoiseThresholds function
+};
+
+// Get noise thresholds with all values based on mode
+export const getNoiseThresholds = (isHardMode: boolean) => {
+  if (isHardMode) {
+    return {
+      LOW: 60,      // Higher threshold in hard mode
+      MEDIUM: 110,  // Higher threshold in hard mode
+      HIGH: 160     // Higher threshold in hard mode
+    };
+  } else {
+    return {
+      LOW: 30,      // Lower threshold in easy mode
+      MEDIUM: 70,   // Same as default in easy mode
+      HIGH: 120     // Lower threshold than hard mode
+    };
+  }
 };
 
 // Check if current noise level is within acceptable limits
-export const isWithinNoiseLimit = (level: number): boolean => {
-  return level <= NOISE_THRESHOLD.MEDIUM;
+export const isWithinNoiseLimit = (level: number, isHardMode: boolean = true): boolean => {
+  const thresholds = getNoiseThresholds(isHardMode);
+  return level <= thresholds.MEDIUM;
 };
 
 // Get noise level category for visualization
-export const getNoiseLevelCategory = (level: number): 'low' | 'medium' | 'high' => {
-  if (level < NOISE_THRESHOLD.LOW) return 'low';
-  if (level < NOISE_THRESHOLD.MEDIUM) return 'medium';
+export const getNoiseLevelCategory = (level: number, isHardMode: boolean = true): 'low' | 'medium' | 'high' => {
+  const thresholds = getNoiseThresholds(isHardMode);
+  if (level < thresholds.LOW) return 'low';
+  if (level < thresholds.MEDIUM) return 'medium';
   return 'high';
 };

@@ -1,23 +1,28 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import { getNoiseLevelCategory, NOISE_THRESHOLD } from '@/utils/audioUtils';
+import { getNoiseLevelCategory, getNoiseThresholds } from '@/utils/audioUtils';
 import diyaImage from '@/assets/images/oil-lamp-light.png';
+import { useModeContext } from '@/contexts/ModeContext';
 
 interface DiyaProps {
   noiseLevel: number;
 }
 
 const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
+  const { isHardMode } = useModeContext();
   const [isFlameVisible, setIsFlameVisible] = useState(false);
   const [hasHitHighThreshold, setHasHitHighThreshold] = useState(false);
   
+  // Get thresholds based on current mode
+  const thresholds = useMemo(() => getNoiseThresholds(isHardMode), [isHardMode]);
+  
   // Effect to check if HIGH threshold is hit for the first time
   useEffect(() => {
-    if (noiseLevel >= NOISE_THRESHOLD.HIGH && !hasHitHighThreshold) {
+    if (noiseLevel >= thresholds.HIGH && !hasHitHighThreshold) {
       setHasHitHighThreshold(true);
       setIsFlameVisible(true);
     }
-  }, [noiseLevel, hasHitHighThreshold]);
+  }, [noiseLevel, hasHitHighThreshold, thresholds.HIGH]);
 
   // Calculate flame size based on noise level and threshold status
   const flameSize = useMemo(() => {
@@ -27,33 +32,33 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
     }
     
     // No flame below LOW threshold
-    if (noiseLevel < NOISE_THRESHOLD.LOW) return 0;
+    if (noiseLevel < thresholds.LOW) return 0;
     
     // Gradual size increase between LOW and HIGH thresholds
-    const ratio = (noiseLevel - NOISE_THRESHOLD.LOW) / (NOISE_THRESHOLD.HIGH - NOISE_THRESHOLD.LOW);
+    const ratio = (noiseLevel - thresholds.LOW) / (thresholds.HIGH - thresholds.LOW);
     
     // Using a slightly non-linear growth function for more realistic appearance
     const growthFactor = Math.pow(ratio, 1.2);
     return Math.min(100, Math.max(10, growthFactor * 90 + 10));
-  }, [noiseLevel, hasHitHighThreshold]);
+  }, [noiseLevel, hasHitHighThreshold, thresholds.LOW, thresholds.HIGH]);
 
   // Determine flame flicker intensity based on threshold status
   const flickerIntensity = useMemo(() => {
     // Once high threshold is hit, always return maximum intensity
     if (hasHitHighThreshold) return 1.0;
     
-    const category = getNoiseLevelCategory(noiseLevel);
+    const category = getNoiseLevelCategory(noiseLevel, isHardMode);
     if (category === 'low') return 0.3;
     if (category === 'medium') return 0.6;
     return 1.0;
-  }, [noiseLevel, hasHitHighThreshold]);
+  }, [noiseLevel, hasHitHighThreshold, isHardMode]);
 
   // Only monitor flame visibility if threshold hasn't been hit
   useEffect(() => {
     if (!hasHitHighThreshold) {
-      setIsFlameVisible(noiseLevel >= NOISE_THRESHOLD.LOW);
+      setIsFlameVisible(noiseLevel >= thresholds.LOW);
     }
-  }, [noiseLevel, hasHitHighThreshold]);
+  }, [noiseLevel, hasHitHighThreshold, thresholds.LOW]);
 
   return (
     <div className="relative w-full h-full flex items-center justify-center pt-16">
