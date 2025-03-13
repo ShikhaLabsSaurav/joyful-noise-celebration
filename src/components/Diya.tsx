@@ -69,8 +69,8 @@ const Diya: React.FC<DiyaProps> = ({ noiseLevel }) => {
             isFlameVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
           )}
           style={{
-            height: `${Math.max(60, flameSize * 2)}px`,
-            width: `${Math.max(36, flameSize * 1)}px`,
+            height: `${Math.max(90, flameSize * 3)}px`,
+            width: `${Math.max(54, flameSize * 1.5)}px`,
             transitionProperty: "opacity, transform, height, width"
           }}
         >
@@ -107,7 +107,7 @@ const RealisticFlame: React.FC<{
         "absolute inset-0",
         `bg-gradient-to-t ${flameGradient}`,
         flickerAnimation,
-        "rounded-full rounded-b-none",
+        "rounded-[100%]",
         "origin-bottom",
         // Inner glow
         "after:absolute after:inset-[15%]",
@@ -121,8 +121,7 @@ const RealisticFlame: React.FC<{
       <div className={cn(
         "absolute bottom-0",
         "w-full h-[15%]",
-        "bg-gradient-to-t from-blue-600 via-blue-400 to-transparent",
-        "rounded-full",
+        "rounded-[100%]",
         "opacity-50"
       )} />
 
