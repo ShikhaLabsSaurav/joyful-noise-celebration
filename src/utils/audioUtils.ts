@@ -67,9 +67,9 @@ export const getNoiseThresholds = (isHardMode: boolean) => {
     };
   } else {
     return {
-      LOW: 30,      // Lower threshold in easy mode
-      MEDIUM: 70,   // Same as default in easy mode
-      HIGH: 120     // Lower threshold than hard mode
+      LOW: 20,      // Lower threshold in easy mode
+      MEDIUM: 40,   // Same as default in easy mode
+      HIGH: 60     // Lower threshold than hard mode
     };
   }
 };
